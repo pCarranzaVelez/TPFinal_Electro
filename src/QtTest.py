@@ -33,10 +33,10 @@ class myWidget(QWidget, Ui_Form):
         self.first_zero_real.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
         self.first_zero_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
 
-        self.w0_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+        self.w0_input.setValidator(QtGui.QDoubleValidator(10e-12, 10e12, 8, self))
         self.xi_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
 
-        self.wz_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+        self.wz_input.setValidator(QtGui.QDoubleValidator(10e-12, 10e12, 8, self))
         self.xiz_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
 
         self.amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
@@ -195,6 +195,7 @@ class myWidget(QWidget, Ui_Form):
         w0 = 1
         pole = 0 + 1j * 0
         zero = 0 + 1j * 0
+        gain = 1
 
         if self.filter_flag == '1st low pass':
             pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
@@ -242,6 +243,7 @@ class myWidget(QWidget, Ui_Form):
                 self.filter_label.setText('1st Order All Pass Filter')
                 self.first_zero_input.hide()
             else:
+                gain = gain * (wz / wp)
                 self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
             w0 = wp
         elif self.filter_flag == '2nd low pass':
@@ -279,23 +281,34 @@ class myWidget(QWidget, Ui_Form):
             xip = (float(self.xi_input.text()))
             wz = (float(self.wz_input.text()))
             xiz = (float(self.xiz_input.text()))
-            P = [1/(wz**2), 2 * xiz * wz, 1]
+            P = [1/(wz**2), -2 * xiz * wz, 1]
             Q = [1/(wp**2), 2 * xip * wp, 1]
             w0 = wp
             if wz > wp:
                 self.filter_label.setText('2nd Order Low Pass Notch Filter')
                 self.filter_flag = 'low pass notch'
+            elif wz == wp:
+                self.filter_label.setText('2nd All Pass Notch Filter')
+                self.zero_value_input.hide()
+                self.filter_flag = '2nd low all pass'
+            else:
+                gain = gain * (wz ** 2) / (wp ** 2)
         elif self.filter_flag == 'low pass notch':
             wp = (float(self.w0_input.text()))
             xip = (float(self.xi_input.text()))
             wz = (float(self.wz_input.text()))
             xiz = (float(self.xiz_input.text()))
-            P = [1/(wz**2), 2 * xiz * wz, 1]
+            P = [1/(wz**2), -2 * xiz * wz, 1]
             Q = [1/(wp**2), 2 * xip * wp, 1]
             w0 = wp
             if wz < wp:
                 self.filter_label.setText('2nd Order High Pass Notch Filter')
                 self.filter_flag = 'high pass notch'
+                gain = gain * (wz ** 2) / (wp ** 2)
+            elif wz == wp:
+                self.filter_label.setText('2nd All Pass Notch Filter')
+                self.zero_value_input.hide()
+                self.filter_flag = '2nd low all pass'
         elif self.filter_flag == 'none':
             self.filter_label.setText('No Filter Selected!')
             return
@@ -304,7 +317,7 @@ class myWidget(QWidget, Ui_Form):
         left_limit = order_of_magnitude - 5
         right_limit = order_of_magnitude + 5
 
-        gain = float(self.gain_input.text())
+        gain = gain * float(self.gain_input.text())
         i = 0
         while i < len(P):
             P[i] = gain * P[i]
@@ -353,7 +366,7 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
-            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or '1st arb filter':
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '1st arb filter':
                 transfer_poles = pole
             else:
                 transfer_poles = H.poles
