@@ -90,6 +90,7 @@ class myWidget(QWidget, Ui_Form):
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.first_pole_input.show()
+        self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low pass'
         self.filter_label.setText('1st Order Low Pass Filter')
 
@@ -97,10 +98,12 @@ class myWidget(QWidget, Ui_Form):
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.first_pole_input.show()
+        self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st high pass'
         self.filter_label.setText('1st Order High Pass Filter')
 
     def set_1st_high_allpass(self):
+        self.first_pole_input.setTitle("First Order Zero")
         self.char_value_input.hide()
         self.first_pole_input.show()
         self.zero_value_input.hide()
@@ -111,6 +114,7 @@ class myWidget(QWidget, Ui_Form):
         self.char_value_input.hide()
         self.first_pole_input.show()
         self.zero_value_input.hide()
+        self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low all pass'
         self.filter_label.setText('1st Order Low All Pass Filter')
 
@@ -187,7 +191,7 @@ class myWidget(QWidget, Ui_Form):
             P = [1, 0]
             Q = [1, w0]
         elif self.filter_flag == '1st high all pass':
-            pole = (float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+            pole = (-1 * float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
             w0 = abs(pole)
             P = [1, w0]
             Q = [1, -1 * w0]
@@ -305,7 +309,7 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
-            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass':
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '1st high all pass':
                 transfer_poles = pole
             else:
                 transfer_poles = H.poles
