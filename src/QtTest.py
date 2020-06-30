@@ -288,7 +288,7 @@ class myWidget(QWidget, Ui_Form):
                 w0 = wp
                 self.filter_label.setText('1st Order Low Pass Filter')
             else:
-                if wz == 0:
+                if wz == 0.0:
                     P = [1, 0]
                     Q = [1, wp]
                     self.filter_label.setText('1st Order High Pass Filter')
@@ -303,7 +303,7 @@ class myWidget(QWidget, Ui_Form):
                     self.filter_flag = '1st low all pass'
                     self.filter_label.setText('1st Order All Pass Filter')
                     self.first_zero_input.hide()
-                else:
+                elif wz != 0:
                     gain = gain * (wz / wp)
                     self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
                 w0 = wp
