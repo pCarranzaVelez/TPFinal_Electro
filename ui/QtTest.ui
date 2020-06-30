@@ -28,10 +28,10 @@
   <widget class="QLabel" name="filter_label">
    <property name="geometry">
     <rect>
-     <x>890</x>
-     <y>870</y>
-     <width>391</width>
-     <height>81</height>
+     <x>850</x>
+     <y>910</y>
+     <width>751</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -48,7 +48,7 @@
     <rect>
      <x>10</x>
      <y>760</y>
-     <width>851</width>
+     <width>821</width>
      <height>211</height>
     </rect>
    </property>
@@ -67,10 +67,10 @@
     <widget class="QPushButton" name="low_pass_1">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>40</y>
-       <width>181</width>
-       <height>101</height>
+       <x>90</x>
+       <y>20</y>
+       <width>261</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="font">
@@ -87,10 +87,10 @@ Low Pass Filter
     <widget class="QPushButton" name="high_pass_1">
      <property name="geometry">
       <rect>
-       <x>320</x>
-       <y>40</y>
-       <width>181</width>
-       <height>101</height>
+       <x>460</x>
+       <y>20</y>
+       <width>261</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="font">
@@ -107,10 +107,10 @@ High Pass Filter
     <widget class="QPushButton" name="low_all_pass_1">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>40</y>
-       <width>181</width>
-       <height>101</height>
+       <x>90</x>
+       <y>100</y>
+       <width>261</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="font">
@@ -124,6 +124,26 @@ All Pass Filter
 </string>
      </property>
     </widget>
+    <widget class="QPushButton" name="arb_filter">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>100</y>
+       <width>261</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>
+ Arbitrary Pole/Zero Filter
+</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -132,7 +152,7 @@ All Pass Filter
     <widget class="QPushButton" name="low_pass_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>20</y>
        <width>171</width>
        <height>61</height>
@@ -152,7 +172,7 @@ Low Pass Filter
     <widget class="QPushButton" name="high_pass_2">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>220</x>
        <y>20</y>
        <width>171</width>
        <height>61</height>
@@ -172,7 +192,7 @@ High Pass Filter
     <widget class="QPushButton" name="band_pass">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>620</x>
        <y>20</y>
        <width>171</width>
        <height>61</height>
@@ -192,7 +212,7 @@ Band Pass Filter
     <widget class="QPushButton" name="notch">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>120</x>
        <y>100</y>
        <width>171</width>
        <height>61</height>
@@ -212,7 +232,7 @@ Notch Filter
     <widget class="QPushButton" name="low_all_pass_2">
      <property name="geometry">
       <rect>
-       <x>430</x>
+       <x>420</x>
        <y>20</y>
        <width>171</width>
        <height>61</height>
@@ -232,7 +252,7 @@ All Pass Filter
     <widget class="QPushButton" name="low_pass_notch">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>320</x>
        <y>100</y>
        <width>171</width>
        <height>61</height>
@@ -252,7 +272,7 @@ Low-Pass Notch Filter
     <widget class="QPushButton" name="high_pass_notch">
      <property name="geometry">
       <rect>
-       <x>530</x>
+       <x>520</x>
        <y>100</y>
        <width>171</width>
        <height>61</height>
@@ -400,8 +420,8 @@ High-Pass Notch Filter
   <widget class="QLabel" name="first_pole_im_label_4">
    <property name="geometry">
     <rect>
-     <x>880</x>
-     <y>790</y>
+     <x>850</x>
+     <y>830</y>
      <width>101</width>
      <height>31</height>
     </rect>
@@ -418,8 +438,8 @@ High-Pass Notch Filter
   <widget class="QLineEdit" name="gain_input">
    <property name="geometry">
     <rect>
-     <x>880</x>
-     <y>825</y>
+     <x>850</x>
+     <y>865</y>
      <width>151</width>
      <height>41</height>
     </rect>
@@ -437,7 +457,7 @@ High-Pass Notch Filter
    <property name="geometry">
     <rect>
      <x>840</x>
-     <y>430</y>
+     <y>560</y>
      <width>361</width>
      <height>131</height>
     </rect>
@@ -1013,7 +1033,7 @@ High-Pass Notch Filter
    <property name="geometry">
     <rect>
      <x>840</x>
-     <y>560</y>
+     <y>690</y>
      <width>361</width>
      <height>131</height>
     </rect>
@@ -1116,6 +1136,96 @@ High-Pass Notch Filter
    <property name="text">
     <string>x axis in [rad/s]</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="first_zero_input">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>430</y>
+     <width>361</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>First Order Zero</string>
+   </property>
+   <widget class="QLabel" name="first_pole_re_label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Re(zero):</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="first_zero_im">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>75</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="first_zero_real">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>75</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="first_pole_im_label_7">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>40</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Im(zero):</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

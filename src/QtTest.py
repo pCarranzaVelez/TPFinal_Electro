@@ -21,13 +21,17 @@ class myWidget(QWidget, Ui_Form):
 
         self.filter_flag = 'none'
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.pole_label.hide()
 
         # Input Validators
-        self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, 0, 8, self))
+        self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, -10e-12, 8, self))
         self.first_pole_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
+
+        self.first_zero_real.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
+        self.first_zero_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
 
         self.w0_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.xi_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
@@ -63,6 +67,7 @@ class myWidget(QWidget, Ui_Form):
         self.high_pass_1.clicked.connect(self.set_1st_highpass)
 #        self.high_all_pass_1.clicked.connect(self.set_1st_high_allpass)
         self.low_all_pass_1.clicked.connect(self.set_1st_low_allpass)
+        self.arb_filter.clicked.connect(self.set_arb_filter)
         # Second Order
         self.high_pass_2.clicked.connect(self.set_2nd_highpass)
         self.low_pass_2.clicked.connect(self.set_2nd_lowpass)
@@ -88,6 +93,7 @@ class myWidget(QWidget, Ui_Form):
     def set_1st_lowpass(self):
         self.char_value_input.hide()
         self.zero_value_input.hide()
+        self.first_zero_input.hide()
         self.first_pole_input.show()
         self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low pass'
@@ -96,6 +102,7 @@ class myWidget(QWidget, Ui_Form):
     def set_1st_highpass(self):
         self.char_value_input.hide()
         self.zero_value_input.hide()
+        self.first_zero_input.hide()
         self.first_pole_input.show()
         self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st high pass'
@@ -116,6 +123,15 @@ class myWidget(QWidget, Ui_Form):
         self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low all pass'
         self.filter_label.setText('1st Order All Pass Filter')
+
+    def set_arb_filter(self):
+        self.char_value_input.hide()
+        self.first_pole_input.show()
+        self.first_zero_input.show()
+        self.zero_value_input.hide()
+        self.first_pole_input.setTitle("First Order Pole")
+        self.filter_flag = '1st arb filter'
+        self.filter_label.setText('1st Order Arbitrary Pole/Zero Filter')
 
     def set_2nd_lowpass(self):
         self.char_value_input.show()
@@ -178,6 +194,7 @@ class myWidget(QWidget, Ui_Form):
         order_of_magnitude = 1
         w0 = 1
         pole = 0 + 1j * 0
+        zero = 0 + 1j * 0
 
         if self.filter_flag == '1st low pass':
             pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
@@ -199,6 +216,34 @@ class myWidget(QWidget, Ui_Form):
             w0 = abs(pole)
             P = [1, -1 * w0]
             Q = [1, w0]
+        elif self.filter_flag == '1st arb filter':
+            pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
+            wp = abs(pole)
+            zero = (float(self.first_zero_real.text()) + 1j * float(self.first_zero_im.text()))
+            wz = abs(zero)
+            # if wz == 0 => full high pass
+            if wz == 0:
+                P = [1, 0]
+                Q = [1, wp]
+                self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
+            else:
+                P = [1 / wz, 1]
+                Q = [1 / wp, 1]
+
+            if wz > wp:
+                # if wz >> wp => full low pass
+                if (wz / wp) > 10e10:
+                    P = [wp]
+                    Q = [1, wp]
+                self.filter_label.setText('1st Order Arbitrary Pole/Zero Low Pass Filter')
+            elif wp == wz:
+                # wp == wz => all pass
+                self.filter_flag = '1st low all pass'
+                self.filter_label.setText('1st Order All Pass Filter')
+                self.first_zero_input.hide()
+            else:
+                self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
+            w0 = wp
         elif self.filter_flag == '2nd low pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -308,12 +353,14 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
-            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass':
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or '1st arb filter':
                 transfer_poles = pole
             else:
                 transfer_poles = H.poles
             if self.filter_flag == '1st low all pass':
                 transfer_zeros = -1 * pole.real + 1j * pole.imag
+            elif self.filter_flag == '1st arb filter':
+                transfer_zeros = zero
             else:
                 transfer_zeros = H.zeros
             self.axes.scatter(transfer_poles.real, transfer_poles.imag, marker='o', color='r')
