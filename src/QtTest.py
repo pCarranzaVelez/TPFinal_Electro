@@ -247,6 +247,7 @@ class myWidget(QWidget, Ui_Form):
             if wz < wp:
                 self.filter_label.setText('2nd Order High Pass Notch Filter')
         elif self.filter_flag == 'none':
+            self.filter_label.setText('No Filter Selected!')
             return
 
         order_of_magnitude = floor(log10(w0))
