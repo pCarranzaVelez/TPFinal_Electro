@@ -82,32 +82,24 @@ class myWidget(QWidget, Ui_Form):
     def set_1st_lowpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
-        self.first_pole_im.hide()
-        self.first_pole_im_label.hide()
         self.filter_flag = '1st low pass'
         self.filter_label.setText('1st Order Low Pass Filter')
 
     def set_1st_highpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
-        self.first_pole_im.hide()
-        self.first_pole_im_label.hide()
         self.filter_flag = '1st high pass'
         self.filter_label.setText('1st Order High Pass Filter')
 
     def set_1st_high_allpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
-        self.first_pole_im.hide()
-        self.first_pole_im_label.hide()
         self.filter_flag = '1st high all pass'
         self.filter_label.setText('1st Order High All Pass Filter')
 
     def set_1st_low_allpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
-        self.first_pole_im.hide()
-        self.first_pole_im_label.hide()
         self.filter_flag = '1st low all pass'
         self.filter_label.setText('1st Order Low All Pass Filter')
 
@@ -150,76 +142,63 @@ class myWidget(QWidget, Ui_Form):
     def plot(self, flag):
 
         order_of_magnitude = 1
+        w0 = 1
+        pole = 0 + 1j * 0
 
         if self.filter_flag == '1st low pass':
-            pole = (float(self.first_pole_real.text()))
-            P = [-1 * pole]
-            Q = [1, -1 * pole]
-
-            order_of_magnitude = floor(log10(-1 * pole))
+            pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
+            w0 = abs(pole)
+            P = [w0]
+            Q = [1, w0]
         elif self.filter_flag == '1st high pass':
-            pole = (float(self.first_pole_real.text()))
+            pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
+            w0 = abs(pole)
             P = [1, 0]
-            Q = [1, -1 * pole]
-
-            order_of_magnitude = floor(log10(-1 * pole))
+            Q = [1, w0]
         elif self.filter_flag == '1st high all pass':
-            pole = (float(self.first_pole_real.text()))
-            P = [1, pole]
-            Q = [1, -1 * pole]
-
-            order_of_magnitude = floor(log10(-1 * pole))
+            pole = (float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+            w0 = abs(pole)
+            P = [1, w0]
+            Q = [1, -1 * w0]
         elif self.filter_flag == '1st low all pass':
-            pole = (float(self.first_pole_real.text()))
-            P = [1, -1 * pole]
-            Q = [1, pole]
-
-            order_of_magnitude = floor(log10(-1 * pole))
+            pole = (float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+            w0 = abs(pole)
+            P = [1, -1 * w0]
+            Q = [1, w0]
         elif self.filter_flag == '2nd low pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == '2nd high pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [1, 0, 0]
             Q = [1, 2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == 'band pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [2 * xi * w0, 0]
             Q = [1, 2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == 'notch':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [1, 0, w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == '2nd high all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [1, 2 * xi * w0, w0 ** 2]
             Q = [1, -2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == '2nd low all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
             P = [1, -2 * xi * w0, w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
-
-            order_of_magnitude = floor(log10(w0))
         elif self.filter_flag == 'none':
             return
 
+        order_of_magnitude = floor(log10(w0))
         left_limit = order_of_magnitude - 5
         right_limit = order_of_magnitude + 5
 
@@ -260,8 +239,14 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z))')
             self.axes.set_ylabel('Im(Z)')
-            transfer_poles = H.poles
-            transfer_zeros = H.zeros
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass':
+                transfer_poles = pole
+            else:
+                transfer_poles = H.poles
+            if self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass':
+                transfer_zeros = -1 * pole.real + 1j * pole.imag
+            else:
+                transfer_zeros = H.zeros
             self.axes.scatter(transfer_poles.real, transfer_poles.imag, marker='o', color='r')
             self.axes.scatter(transfer_zeros.real, transfer_zeros.imag, marker='^', color='b')
         elif flag == 'sine':

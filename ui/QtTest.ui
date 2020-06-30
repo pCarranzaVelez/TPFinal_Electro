@@ -379,7 +379,7 @@ High-Pass Notch Filter
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="first_pole_real">

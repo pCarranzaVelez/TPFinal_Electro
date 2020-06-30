@@ -137,7 +137,6 @@ class Ui_Form(object):
         font = QtGui.QFont()
         font.setPointSize(20)
         self.first_pole_im.setFont(font)
-        self.first_pole_im.setText("")
         self.first_pole_im.setObjectName("first_pole_im")
         self.first_pole_real = QtWidgets.QLineEdit(self.first_pole_input)
         self.first_pole_real.setGeometry(QtCore.QRect(20, 75, 151, 41))
@@ -411,6 +410,7 @@ class Ui_Form(object):
         self.label_2.setText(_translate("Form", "Filters:"))
         self.first_pole_input.setTitle(_translate("Form", "First Pole"))
         self.first_pole_re_label.setText(_translate("Form", "Re(pole):"))
+        self.first_pole_im.setText(_translate("Form", "0"))
         self.first_pole_real.setText(_translate("Form", "-1"))
         self.first_pole_im_label.setText(_translate("Form", "Im(pole):"))
         self.pole_label.setText(_translate("Form", "Triangles: Zeros\n"
