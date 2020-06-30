@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1242</width>
+    <width>1611</width>
     <height>980</height>
    </rect>
   </property>
@@ -25,29 +25,11 @@
    <widget class="QWidget" name="page"/>
    <widget class="QWidget" name="page_2"/>
   </widget>
-  <widget class="QPushButton" name="bode_plot_button">
-   <property name="geometry">
-    <rect>
-     <x>840</x>
-     <y>20</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Bode Plot</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="filter_label">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>880</y>
+     <x>890</x>
+     <y>870</y>
      <width>391</width>
      <height>81</height>
     </rect>
@@ -64,9 +46,9 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>760</y>
-     <width>661</width>
+     <width>851</width>
      <height>211</height>
     </rect>
    </property>
@@ -125,10 +107,10 @@ High Pass Filter
     <widget class="QPushButton" name="high_all_pass_1">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>10</y>
+       <x>430</x>
+       <y>40</y>
        <width>151</width>
-       <height>61</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="font">
@@ -145,10 +127,10 @@ High All Pass Filter
     <widget class="QPushButton" name="low_all_pass_1">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>90</y>
+       <x>630</x>
+       <y>40</y>
        <width>151</width>
-       <height>61</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="font">
@@ -287,6 +269,46 @@ Low All Pass Filter
 </string>
      </property>
     </widget>
+    <widget class="QPushButton" name="low_pass_notch">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>10</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>
+Low-Pass Notch Filter
+</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="high_pass_notch">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>90</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>
+High-Pass Notch Filter
+</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -305,42 +327,6 @@ Low All Pass Filter
    </property>
    <property name="text">
     <string>Filters:</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="phase_plot_button">
-   <property name="geometry">
-    <rect>
-     <x>960</x>
-     <y>20</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Phase Plot</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pole_plot_button">
-   <property name="geometry">
-    <rect>
-     <x>1090</x>
-     <y>20</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Zero/Pole Plot</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="first_pole_input">
@@ -411,7 +397,7 @@ Low All Pass Filter
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>-1</string>
     </property>
    </widget>
    <widget class="QLabel" name="first_pole_im_label">
@@ -433,11 +419,66 @@ Low All Pass Filter
     </property>
    </widget>
   </widget>
+  <widget class="QLabel" name="pole_label">
+   <property name="geometry">
+    <rect>
+     <x>840</x>
+     <y>590</y>
+     <width>211</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Triangles: Zeros
+Circles: Poles</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="first_pole_im_label_4">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>790</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string> Filter Gain:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="gain_input">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>825</y>
+     <width>151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+  </widget>
   <widget class="QGroupBox" name="char_value_input">
    <property name="geometry">
     <rect>
      <x>840</x>
-     <y>450</y>
+     <y>440</y>
      <width>361</width>
      <height>131</height>
     </rect>
@@ -483,7 +524,7 @@ Low All Pass Filter
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>0.5</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="w0_input">
@@ -501,7 +542,7 @@ Low All Pass Filter
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>1</string>
     </property>
    </widget>
    <widget class="QLabel" name="first_pole_im_label_2">
@@ -523,85 +564,102 @@ Low All Pass Filter
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="pole_label">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
      <x>840</x>
-     <y>590</y>
-     <width>121</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Triangle: Zeros
-Circle: Poles</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="sine_plot_button">
-   <property name="geometry">
-    <rect>
-     <x>830</x>
-     <y>90</y>
-     <width>131</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>sin(t) Response</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="u_plot_button">
-   <property name="geometry">
-    <rect>
-     <x>1110</x>
-     <y>90</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>u(t) Response</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="signal_input">
-   <property name="geometry">
-    <rect>
-     <x>840</x>
-     <y>150</y>
+     <y>20</y>
      <width>361</width>
-     <height>131</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="title">
-    <string>Signal Properties</string>
+    <string>Bode Graphs</string>
    </property>
-   <widget class="QLabel" name="first_pole_re_label_3">
+   <widget class="QPushButton" name="bode_plot_button">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>101</width>
-      <height>31</height>
+      <x>10</x>
+      <y>30</y>
+      <width>331</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Bode Plot</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="phase_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>331</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Phase Plot</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pole_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>331</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Zero/Pole Plot</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>1210</x>
+     <y>20</y>
+     <width>391</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>Sinusoid Signal Input</string>
+   </property>
+   <widget class="QPushButton" name="sine_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>161</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -610,52 +668,16 @@ Circle: Poles</string>
      </font>
     </property>
     <property name="text">
-     <string>Amplitude:</string>
+     <string>sin(t) Response</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="freq_input">
+   <widget class="QPushButton" name="cosine_plot_button">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>75</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="amplitude_input">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>75</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="first_pole_im_label_3">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>40</y>
-      <width>121</width>
-      <height>31</height>
+      <x>210</x>
+      <y>50</y>
+      <width>161</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -664,63 +686,369 @@ Circle: Poles</string>
      </font>
     </property>
     <property name="text">
-     <string>Frequency [Hz]:</string>
+     <string>cos(t) Response</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="signal_input">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>361</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Signal Properties</string>
+    </property>
+    <widget class="QLabel" name="first_pole_re_label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Amplitude:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="freq_input">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>75</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="amplitude_input">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>75</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="first_pole_im_label_3">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>40</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Frequency [Hz]:</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>1210</x>
+     <y>310</y>
+     <width>391</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>Step Signal Input</string>
+   </property>
+   <widget class="QGroupBox" name="signal_input_2">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>191</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Signal Properties</string>
+    </property>
+    <widget class="QLabel" name="first_pole_re_label_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Amplitude:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="ut_amplitude_input">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="u_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>u(t) Response</string>
     </property>
    </widget>
   </widget>
-  <widget class="QPushButton" name="cosine_plot_button">
+  <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
     <rect>
-     <x>970</x>
-     <y>90</y>
-     <width>131</width>
-     <height>41</height>
+     <x>1210</x>
+     <y>450</y>
+     <width>391</width>
+     <height>271</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
-   <property name="text">
-    <string>cos(t) Response</string>
+   <property name="title">
+    <string>Square/Sawtooth Signal Input</string>
    </property>
+   <widget class="QPushButton" name="square_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Π(t) Response</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="signal_input_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>361</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Signal Properties</string>
+    </property>
+    <widget class="QLabel" name="first_pole_re_label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Amplitude:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="square_duty_input">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>75</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>0.5</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="square_amplitude_input">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>75</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="first_pole_im_label_5">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>40</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Duty Cycle/Width (0,1]:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="sawtooth_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>50</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Λ(t) Response</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QLabel" name="first_pole_im_label_4">
+  <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>800</y>
-     <width>101</width>
-     <height>31</height>
+     <x>1220</x>
+     <y>730</y>
+     <width>391</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
-   <property name="text">
-    <string> Filter Gain:</string>
+   <property name="title">
+    <string>Impulse Signal Input</string>
    </property>
-  </widget>
-  <widget class="QLineEdit" name="gain_input">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>835</y>
-     <width>151</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>1</string>
-   </property>
+   <widget class="QPushButton" name="delta_plot_button">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>𝛿(t) Response</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -17,19 +17,28 @@ class myWidget(QWidget, Ui_Form):
     def __init__(self):
         super(myWidget, self).__init__()
         self.setupUi(self)
-        self.setWindowTitle("QtTest")
+        self.setWindowTitle("Electrotecnia - TP Final")
 
         self.filter_flag = 'none'
         self.first_pole_input.hide()
         self.char_value_input.hide()
+        self.pole_label.hide()
 
         # Input Validators
         self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, 0, 8, self))
         self.first_pole_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
+
         self.w0_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.xi_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+
         self.amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.freq_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+
+        self.square_amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+        self.square_duty_input.setValidator(QtGui.QDoubleValidator(1e-12, 1, 8, self))
+
+        self.ut_amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+
         self.gain_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
 
         # Canvas
@@ -65,6 +74,9 @@ class myWidget(QWidget, Ui_Form):
         self.sine_plot_button.clicked.connect(lambda: self.plot('sine'))
         self.cosine_plot_button.clicked.connect(lambda: self.plot('cosine'))
         self.u_plot_button.clicked.connect(lambda: self.plot('ut'))
+        self.square_plot_button.clicked.connect(lambda: self.plot('square'))
+        self.sawtooth_plot_button.clicked.connect(lambda: self.plot('sawtooth'))
+        self.delta_plot_button.clicked.connect(lambda: self.plot('delta'))
 
     @pyqtSlot()
     def set_1st_lowpass(self):
@@ -145,28 +157,24 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, -1 * pole]
 
             order_of_magnitude = floor(log10(-1 * pole))
-
         elif self.filter_flag == '1st high pass':
             pole = (float(self.first_pole_real.text()))
             P = [1, 0]
             Q = [1, -1 * pole]
 
             order_of_magnitude = floor(log10(-1 * pole))
-
         elif self.filter_flag == '1st high all pass':
             pole = (float(self.first_pole_real.text()))
             P = [1, pole]
             Q = [1, -1 * pole]
 
             order_of_magnitude = floor(log10(-1 * pole))
-
         elif self.filter_flag == '1st low all pass':
             pole = (float(self.first_pole_real.text()))
             P = [1, -1 * pole]
             Q = [1, pole]
 
             order_of_magnitude = floor(log10(-1 * pole))
-
         elif self.filter_flag == '2nd low pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -174,7 +182,6 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, 2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == '2nd high pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -182,7 +189,6 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, 2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == 'band pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -190,7 +196,6 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, 2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == 'notch':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -198,7 +203,6 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, 2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == '2nd high all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -206,7 +210,6 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, -2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == '2nd low all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -214,26 +217,17 @@ class myWidget(QWidget, Ui_Form):
             Q = [1, 2 * xi * w0, w0 ** 2]
 
             order_of_magnitude = floor(log10(w0))
-
         elif self.filter_flag == 'none':
             return
 
-        if order_of_magnitude > 1:
-            left_limit = 1
-            right_limit = order_of_magnitude + 3
-        elif order_of_magnitude < 1:
-            left_limit = order_of_magnitude - 3
-            right_limit = 1
-        else:
-            left_limit = -5
-            right_limit = 5
+        left_limit = order_of_magnitude - 5
+        right_limit = order_of_magnitude + 5
 
         gain = float(self.gain_input.text())
-
         i = 0
         while i < len(P):
-           P[i] = gain*P[i]
-           i += 1
+            P[i] = gain * P[i]
+            i += 1
 
         H = signal.TransferFunction(P, Q)
 
@@ -274,9 +268,9 @@ class myWidget(QWidget, Ui_Form):
             self.pole_label.hide()
             A = float(self.amplitude_input.text())
             f = float(self.freq_input.text())
-            x2 = linspace(0, 10/f, num=1000)
-            sinx = A*sin(2*pi*f*x2)
-            sine = signal.lsim(H, U = sinx, T = x2)
+            x2 = linspace(0, 10 / f, num=1000)
+            sinx = A * sin(2 * pi * f * x2)
+            sine = signal.lsim(H, U=sinx, T=x2)
 
             self.axes.set_title('sin(t) response')
             self.axes.set_xlabel('t')
@@ -287,7 +281,7 @@ class myWidget(QWidget, Ui_Form):
             self.pole_label.hide()
             A = float(self.amplitude_input.text())
             f = float(self.freq_input.text())
-            x2 = linspace(0, 10/f, num=1000)
+            x2 = linspace(0, 10 / f, num=1000)
             cosx = A * cos(2 * pi * f * x2)
             cosine = signal.lsim(H, U=cosx, T=x2)
 
@@ -298,16 +292,52 @@ class myWidget(QWidget, Ui_Form):
             self.axes.plot(cosine[0], cosine[1])
         elif flag == 'ut':
             self.pole_label.hide()
-            A = float(self.amplitude_input.text())
+            A = float(self.ut_amplitude_input.text())
             x2 = linspace(0, 10, num=1000)
             ut = A * heaviside(x2, 0.5)
-            sine = signal.lsim(H, U=ut, T=x2)
+            step = signal.lsim(H, U=ut, T=x2)
 
             self.axes.set_title('u(t) response')
             self.axes.set_xlabel('t')
             self.axes.set_ylabel('Amplitude')
 
-            self.axes.plot(sine[0], sine[1])
+            self.axes.plot(step[0], step[1])
+        elif flag == 'square':
+            self.pole_label.hide()
+            A = float(self.square_amplitude_input.text())
+            dc = float(self.square_duty_input.text())
+            x2 = linspace(0, 10 / dc, num=1000)
+            sqx = A * signal.square(x2, dc)
+            square = signal.lsim(H, U=sqx, T=x2)
+
+            self.axes.set_title('Π(t) response')
+            self.axes.set_xlabel('t')
+            self.axes.set_ylabel('Amplitude')
+
+            self.axes.plot(square[0], square[1])
+        elif flag == 'sawtooth':
+            self.pole_label.hide()
+            A = float(self.square_amplitude_input.text())
+            dc = float(self.square_duty_input.text())
+            x2 = linspace(0, 10 / dc, num=1000)
+            stx = A * signal.sawtooth(x2, dc)
+            sawtooth = signal.lsim(H, U=stx, T=x2)
+
+            self.axes.set_title('Λ(t) response')
+            self.axes.set_xlabel('t')
+            self.axes.set_ylabel('Amplitude')
+
+            self.axes.plot(sawtooth[0], sawtooth[1])
+        elif flag == 'delta':
+            self.pole_label.hide()
+            x2 = linspace(0, 10, num=1000)
+            delta = signal.impulse(H, T=x2)
+
+            self.axes.set_title('δ(t) response')
+            self.axes.set_xlabel('t')
+            self.axes.set_ylabel('Amplitude')
+
+            self.axes.plot(delta[0], delta[1])
 
         self.axes.grid(True, which='both')
         self.axes.minorticks_on()
