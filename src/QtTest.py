@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSlot
 
 from ui.QtTest import Ui_Form
 import scipy.signal as signal
-from numpy import linspace, logspace, cos, sin, heaviside, log10, floor, zeros
+from numpy import linspace, logspace, cos, sin, heaviside, log10, floor, zeros, ones
 from math import pi
 
 from matplotlib.figure import Figure
@@ -62,14 +62,14 @@ class myWidget(QWidget, Ui_Form):
         # First Order
         self.low_pass_1.clicked.connect(self.set_1st_lowpass)
         self.high_pass_1.clicked.connect(self.set_1st_highpass)
-        self.high_all_pass_1.clicked.connect(self.set_1st_high_allpass)
+#        self.high_all_pass_1.clicked.connect(self.set_1st_high_allpass)
         self.low_all_pass_1.clicked.connect(self.set_1st_low_allpass)
         # Second Order
         self.high_pass_2.clicked.connect(self.set_2nd_highpass)
         self.low_pass_2.clicked.connect(self.set_2nd_lowpass)
         self.band_pass.clicked.connect(self.set_bandpass)
         self.notch.clicked.connect(self.set_notch)
-        self.high_all_pass_2.clicked.connect(self.set_2nd_high_allpass)
+#        self.high_all_pass_2.clicked.connect(self.set_2nd_high_allpass)
         self.low_all_pass_2.clicked.connect(self.set_2nd_low_allpass)
         self.high_pass_notch.clicked.connect(self.set_high_pass_notch)
         self.low_pass_notch.clicked.connect(self.set_low_pass_notch)
@@ -102,13 +102,13 @@ class myWidget(QWidget, Ui_Form):
         self.filter_flag = '1st high pass'
         self.filter_label.setText('1st Order High Pass Filter')
 
-    def set_1st_high_allpass(self):
-        self.first_pole_input.setTitle("First Order Zero")
-        self.char_value_input.hide()
-        self.first_pole_input.show()
-        self.zero_value_input.hide()
-        self.filter_flag = '1st high all pass'
-        self.filter_label.setText('1st Order High All Pass Filter')
+#    def set_1st_high_allpass(self):
+#        self.first_pole_input.setTitle("First Order Zero")
+#        self.char_value_input.hide()
+#        self.first_pole_input.show()
+#        self.zero_value_input.hide()
+#        self.filter_flag = '1st high all pass'
+#        self.filter_label.setText('1st Order High All Pass Filter')
 
     def set_1st_low_allpass(self):
         self.char_value_input.hide()
@@ -116,7 +116,7 @@ class myWidget(QWidget, Ui_Form):
         self.zero_value_input.hide()
         self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low all pass'
-        self.filter_label.setText('1st Order Low All Pass Filter')
+        self.filter_label.setText('1st Order All Pass Filter')
 
     def set_2nd_lowpass(self):
         self.char_value_input.show()
@@ -146,19 +146,19 @@ class myWidget(QWidget, Ui_Form):
         self.filter_flag = 'notch'
         self.filter_label.setText('2nd Order Notch Filter')
 
-    def set_2nd_high_allpass(self):
-        self.char_value_input.show()
-        self.first_pole_input.hide()
-        self.zero_value_input.hide()
-        self.filter_flag = '2nd high all pass'
-        self.filter_label.setText('2nd Order High All Pass Filter')
+#    def set_2nd_high_allpass(self):
+#        self.char_value_input.show()
+#        self.first_pole_input.hide()
+#        self.zero_value_input.hide()
+#        self.filter_flag = '2nd high all pass'
+#        self.filter_label.setText('2nd Order High All Pass Filter')
 
     def set_2nd_low_allpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
         self.zero_value_input.hide()
         self.filter_flag = '2nd low all pass'
-        self.filter_label.setText('2nd Order Low All Pass Filter')
+        self.filter_label.setText('2nd Order All Pass Filter')
 
     def set_high_pass_notch(self):
         self.char_value_input.show()
@@ -288,8 +288,8 @@ class myWidget(QWidget, Ui_Form):
                 self.axes.set_xlabel('f (log) [Hz]')
             self.axes.set_xscale('log')
             self.axes.set_ylabel('|H(jw)| [dB]')
-            if self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '2nd high all pass' or self.filter_flag == '2nd low all pass':
-                self.axes.plot(freq, zeros(len(freq)))
+            if self.filter_flag == '1st low all pass' or self.filter_flag == '2nd low all pass':
+                self.axes.plot(freq, 20*log10(ones(len(freq)) * gain))
             else:
                 self.axes.plot(freq, Bode[1])
         elif flag == 'phase':
@@ -309,11 +309,11 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
-            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '1st high all pass':
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass':
                 transfer_poles = pole
             else:
                 transfer_poles = H.poles
-            if self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass':
+            if self.filter_flag == '1st low all pass':
                 transfer_zeros = -1 * pole.real + 1j * pole.imag
             else:
                 transfer_zeros = H.zeros

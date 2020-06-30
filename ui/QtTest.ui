@@ -67,10 +67,10 @@
     <widget class="QPushButton" name="low_pass_1">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>50</x>
        <y>40</y>
-       <width>151</width>
-       <height>81</height>
+       <width>181</width>
+       <height>101</height>
       </rect>
      </property>
      <property name="font">
@@ -87,10 +87,10 @@ Low Pass Filter
     <widget class="QPushButton" name="high_pass_1">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>320</x>
        <y>40</y>
-       <width>151</width>
-       <height>81</height>
+       <width>181</width>
+       <height>101</height>
       </rect>
      </property>
      <property name="font">
@@ -104,43 +104,23 @@ High Pass Filter
 </string>
      </property>
     </widget>
-    <widget class="QPushButton" name="high_all_pass_1">
-     <property name="geometry">
-      <rect>
-       <x>430</x>
-       <y>40</y>
-       <width>151</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>
-High All Pass Filter
-</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="low_all_pass_1">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>600</x>
        <y>40</y>
-       <width>151</width>
-       <height>81</height>
+       <width>181</width>
+       <height>101</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>12</pointsize>
       </font>
      </property>
      <property name="text">
       <string>
-Low All Pass Filter
+All Pass Filter
 </string>
      </property>
     </widget>
@@ -189,31 +169,11 @@ High Pass Filter
 </string>
      </property>
     </widget>
-    <widget class="QPushButton" name="high_all_pass_2">
-     <property name="geometry">
-      <rect>
-       <x>430</x>
-       <y>20</y>
-       <width>171</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>
-High All Pass Filter
-</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="band_pass">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>100</y>
+       <x>630</x>
+       <y>20</y>
        <width>171</width>
        <height>61</height>
       </rect>
@@ -232,7 +192,7 @@ Band Pass Filter
     <widget class="QPushButton" name="notch">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>130</x>
        <y>100</y>
        <width>171</width>
        <height>61</height>
@@ -253,27 +213,27 @@ Notch Filter
      <property name="geometry">
       <rect>
        <x>430</x>
-       <y>100</y>
+       <y>20</y>
        <width>171</width>
        <height>61</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>12</pointsize>
       </font>
      </property>
      <property name="text">
       <string>
-Low All Pass Filter
+All Pass Filter
 </string>
      </property>
     </widget>
     <widget class="QPushButton" name="low_pass_notch">
      <property name="geometry">
       <rect>
-       <x>630</x>
-       <y>20</y>
+       <x>330</x>
+       <y>100</y>
        <width>171</width>
        <height>61</height>
       </rect>
@@ -292,7 +252,7 @@ Low-Pass Notch Filter
     <widget class="QPushButton" name="high_pass_notch">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>530</x>
        <y>100</y>
        <width>171</width>
        <height>61</height>

@@ -39,27 +39,21 @@ class Ui_Form(object):
         self.tab_1 = QtWidgets.QWidget()
         self.tab_1.setObjectName("tab_1")
         self.low_pass_1 = QtWidgets.QPushButton(self.tab_1)
-        self.low_pass_1.setGeometry(QtCore.QRect(20, 40, 151, 81))
+        self.low_pass_1.setGeometry(QtCore.QRect(50, 40, 181, 101))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.low_pass_1.setFont(font)
         self.low_pass_1.setObjectName("low_pass_1")
         self.high_pass_1 = QtWidgets.QPushButton(self.tab_1)
-        self.high_pass_1.setGeometry(QtCore.QRect(230, 40, 151, 81))
+        self.high_pass_1.setGeometry(QtCore.QRect(320, 40, 181, 101))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.high_pass_1.setFont(font)
         self.high_pass_1.setObjectName("high_pass_1")
-        self.high_all_pass_1 = QtWidgets.QPushButton(self.tab_1)
-        self.high_all_pass_1.setGeometry(QtCore.QRect(430, 40, 151, 81))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.high_all_pass_1.setFont(font)
-        self.high_all_pass_1.setObjectName("high_all_pass_1")
         self.low_all_pass_1 = QtWidgets.QPushButton(self.tab_1)
-        self.low_all_pass_1.setGeometry(QtCore.QRect(630, 40, 151, 81))
+        self.low_all_pass_1.setGeometry(QtCore.QRect(600, 40, 181, 101))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
         self.low_all_pass_1.setFont(font)
         self.low_all_pass_1.setObjectName("low_all_pass_1")
         self.tabWidget.addTab(self.tab_1, "")
@@ -77,38 +71,32 @@ class Ui_Form(object):
         font.setPointSize(12)
         self.high_pass_2.setFont(font)
         self.high_pass_2.setObjectName("high_pass_2")
-        self.high_all_pass_2 = QtWidgets.QPushButton(self.tab_2)
-        self.high_all_pass_2.setGeometry(QtCore.QRect(430, 20, 171, 61))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.high_all_pass_2.setFont(font)
-        self.high_all_pass_2.setObjectName("high_all_pass_2")
         self.band_pass = QtWidgets.QPushButton(self.tab_2)
-        self.band_pass.setGeometry(QtCore.QRect(30, 100, 171, 61))
+        self.band_pass.setGeometry(QtCore.QRect(630, 20, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.band_pass.setFont(font)
         self.band_pass.setObjectName("band_pass")
         self.notch = QtWidgets.QPushButton(self.tab_2)
-        self.notch.setGeometry(QtCore.QRect(230, 100, 171, 61))
+        self.notch.setGeometry(QtCore.QRect(130, 100, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.notch.setFont(font)
         self.notch.setObjectName("notch")
         self.low_all_pass_2 = QtWidgets.QPushButton(self.tab_2)
-        self.low_all_pass_2.setGeometry(QtCore.QRect(430, 100, 171, 61))
+        self.low_all_pass_2.setGeometry(QtCore.QRect(430, 20, 171, 61))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
         self.low_all_pass_2.setFont(font)
         self.low_all_pass_2.setObjectName("low_all_pass_2")
         self.low_pass_notch = QtWidgets.QPushButton(self.tab_2)
-        self.low_pass_notch.setGeometry(QtCore.QRect(630, 20, 171, 61))
+        self.low_pass_notch.setGeometry(QtCore.QRect(330, 100, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.low_pass_notch.setFont(font)
         self.low_pass_notch.setObjectName("low_pass_notch")
         self.high_pass_notch = QtWidgets.QPushButton(self.tab_2)
-        self.high_pass_notch.setGeometry(QtCore.QRect(630, 100, 171, 61))
+        self.high_pass_notch.setGeometry(QtCore.QRect(530, 100, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.high_pass_notch.setFont(font)
@@ -411,11 +399,8 @@ class Ui_Form(object):
         self.high_pass_1.setText(_translate("Form", "\n"
 "High Pass Filter\n"
 ""))
-        self.high_all_pass_1.setText(_translate("Form", "\n"
-"High All Pass Filter\n"
-""))
         self.low_all_pass_1.setText(_translate("Form", "\n"
-"Low All Pass Filter\n"
+"All Pass Filter\n"
 ""))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_1), _translate("Form", "First Order"))
         self.low_pass_2.setText(_translate("Form", "\n"
@@ -424,9 +409,6 @@ class Ui_Form(object):
         self.high_pass_2.setText(_translate("Form", "\n"
 "High Pass Filter\n"
 ""))
-        self.high_all_pass_2.setText(_translate("Form", "\n"
-"High All Pass Filter\n"
-""))
         self.band_pass.setText(_translate("Form", "\n"
 "Band Pass Filter\n"
 ""))
@@ -434,7 +416,7 @@ class Ui_Form(object):
 "Notch Filter\n"
 ""))
         self.low_all_pass_2.setText(_translate("Form", "\n"
-"Low All Pass Filter\n"
+"All Pass Filter\n"
 ""))
         self.low_pass_notch.setText(_translate("Form", "\n"
 "Low-Pass Notch Filter\n"
