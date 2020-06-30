@@ -236,6 +236,7 @@ class myWidget(QWidget, Ui_Form):
             w0 = wp
             if wz > wp:
                 self.filter_label.setText('2nd Order Low Pass Notch Filter')
+                self.filter_flag = 'low pass notch'
         elif self.filter_flag == 'low pass notch':
             wp = (float(self.w0_input.text()))
             xip = (float(self.xi_input.text()))
@@ -246,6 +247,7 @@ class myWidget(QWidget, Ui_Form):
             w0 = wp
             if wz < wp:
                 self.filter_label.setText('2nd Order High Pass Notch Filter')
+                self.filter_flag = 'high pass notch'
         elif self.filter_flag == 'none':
             self.filter_label.setText('No Filter Selected!')
             return
@@ -301,7 +303,7 @@ class myWidget(QWidget, Ui_Form):
             self.x_axis_mod.hide()
             self.pole_label.show()
             self.axes.set_title('Zero/Pole plot')
-            self.axes.set_xlabel('Re(Z))')
+            self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
             if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass':
                 transfer_poles = pole
