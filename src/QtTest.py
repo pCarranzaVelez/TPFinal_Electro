@@ -24,7 +24,6 @@ class myWidget(QWidget, Ui_Form):
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.pole_label.hide()
-        self.x_axis_mod.hide()
 
         # Input Validators
         self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, 0, 8, self))
