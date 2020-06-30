@@ -19,6 +19,7 @@ class myWidget(QWidget, Ui_Form):
         self.setupUi(self)
         self.setWindowTitle("Electrotecnia - TP Final")
 
+        # Init
         self.filter_flag = 'none'
         self.first_pole_input.hide()
         self.first_zero_input.hide()
@@ -27,26 +28,27 @@ class myWidget(QWidget, Ui_Form):
         self.pole_label.hide()
 
         # Input Validators
+        # First Pole Input
         self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, -10e-12, 8, self))
         self.first_pole_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
-
+        # First Zero Input
         self.first_zero_real.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
         self.first_zero_im.setValidator(QtGui.QDoubleValidator(-10e12, 10e12, 8, self))
-
+        # Second Order Pole w0, xi Input
         self.w0_input.setValidator(QtGui.QDoubleValidator(10e-12, 10e12, 8, self))
         self.xi_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
-
+        # Second Order Zero w0, xi Input
         self.wz_input.setValidator(QtGui.QDoubleValidator(10e-12, 10e12, 8, self))
         self.xiz_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
-
+        # Sine/Cosine Amplitude and Frequency Input
         self.amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.freq_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
-
+        # Square/Sawtooth Amplitude and Frequency Input
         self.square_amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.square_duty_input.setValidator(QtGui.QDoubleValidator(1e-12, 1, 8, self))
-
+        # Step Amplitude
         self.ut_amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
-
+        # Transfer Function Gain Input
         self.gain_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
 
         # Canvas
@@ -57,7 +59,6 @@ class myWidget(QWidget, Ui_Form):
         self.layout = QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.toolbar)
         self.layout.addWidget(self.canvas)
-
         canvas_index = self.plotter_container.addWidget(self.canvas)
         self.plotter_container.setCurrentIndex(canvas_index)
 
@@ -65,7 +66,7 @@ class myWidget(QWidget, Ui_Form):
         # First Order
         self.low_pass_1.clicked.connect(self.set_1st_lowpass)
         self.high_pass_1.clicked.connect(self.set_1st_highpass)
-#        self.high_all_pass_1.clicked.connect(self.set_1st_high_allpass)
+        #        self.high_all_pass_1.clicked.connect(self.set_1st_high_allpass)
         self.low_all_pass_1.clicked.connect(self.set_1st_low_allpass)
         self.arb_filter.clicked.connect(self.set_arb_filter)
         # Second Order
@@ -73,7 +74,7 @@ class myWidget(QWidget, Ui_Form):
         self.low_pass_2.clicked.connect(self.set_2nd_lowpass)
         self.band_pass.clicked.connect(self.set_bandpass)
         self.notch.clicked.connect(self.set_notch)
-#        self.high_all_pass_2.clicked.connect(self.set_2nd_high_allpass)
+        #        self.high_all_pass_2.clicked.connect(self.set_2nd_high_allpass)
         self.low_all_pass_2.clicked.connect(self.set_2nd_low_allpass)
         self.high_pass_notch.clicked.connect(self.set_high_pass_notch)
         self.low_pass_notch.clicked.connect(self.set_low_pass_notch)
@@ -89,8 +90,15 @@ class myWidget(QWidget, Ui_Form):
         self.sawtooth_plot_button.clicked.connect(lambda: self.plot('sawtooth'))
         self.delta_plot_button.clicked.connect(lambda: self.plot('delta'))
 
+        # Other
+        self.first_pole_checkbox.clicked.connect(self.hide_show_responses)
+
     @pyqtSlot()
+    # Transfer Function Button Setters
     def set_1st_lowpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
+        self.first_pole_checkbox.hide()
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.first_zero_input.hide()
@@ -100,6 +108,9 @@ class myWidget(QWidget, Ui_Form):
         self.filter_label.setText('1st Order Low Pass Filter')
 
     def set_1st_highpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
+        self.first_pole_checkbox.hide()
         self.char_value_input.hide()
         self.zero_value_input.hide()
         self.first_zero_input.hide()
@@ -108,23 +119,30 @@ class myWidget(QWidget, Ui_Form):
         self.filter_flag = '1st high pass'
         self.filter_label.setText('1st Order High Pass Filter')
 
-#    def set_1st_high_allpass(self):
-#        self.first_pole_input.setTitle("First Order Zero")
-#        self.char_value_input.hide()
-#        self.first_pole_input.show()
-#        self.zero_value_input.hide()
-#        self.filter_flag = '1st high all pass'
-#        self.filter_label.setText('1st Order High All Pass Filter')
+    #    def set_1st_high_allpass(self):
+    #        self.first_pole_input.setTitle("First Order Zero")
+    #        self.char_value_input.hide()
+    #        self.first_pole_input.show()
+    #        self.zero_value_input.hide()
+    #        self.filter_flag = '1st high all pass'
+    #        self.filter_label.setText('1st Order High All Pass Filter')
 
     def set_1st_low_allpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
+        self.first_pole_checkbox.hide()
         self.char_value_input.hide()
         self.first_pole_input.show()
         self.zero_value_input.hide()
+        self.first_zero_input.hide()
         self.first_pole_input.setTitle("First Order Pole")
         self.filter_flag = '1st low all pass'
         self.filter_label.setText('1st Order All Pass Filter')
 
     def set_arb_filter(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
+        self.first_pole_checkbox.show()
         self.char_value_input.hide()
         self.first_pole_input.show()
         self.first_zero_input.show()
@@ -134,69 +152,106 @@ class myWidget(QWidget, Ui_Form):
         self.filter_label.setText('1st Order Arbitrary Pole/Zero Filter')
 
     def set_2nd_lowpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.zero_value_input.hide()
         self.filter_flag = '2nd low pass'
         self.filter_label.setText('2nd Order Low Pass Filter')
 
     def set_2nd_highpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.zero_value_input.hide()
         self.filter_flag = '2nd high pass'
         self.filter_label.setText('2nd Order High Pass Filter')
 
     def set_bandpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.zero_value_input.hide()
         self.filter_flag = 'band pass'
         self.filter_label.setText('2nd Order Band Pass Filter')
 
     def set_notch(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.zero_value_input.hide()
         self.filter_flag = 'notch'
         self.filter_label.setText('2nd Order Notch Filter')
 
-#    def set_2nd_high_allpass(self):
-#        self.char_value_input.show()
-#        self.first_pole_input.hide()
-#        self.zero_value_input.hide()
-#        self.filter_flag = '2nd high all pass'
-#        self.filter_label.setText('2nd Order High All Pass Filter')
+    #    def set_2nd_high_allpass(self):
+    #        self.char_value_input.show()
+    #        self.first_pole_input.hide()
+    #        self.zero_value_input.hide()
+    #        self.filter_flag = '2nd high all pass'
+    #        self.filter_label.setText('2nd Order High All Pass Filter')
 
     def set_2nd_low_allpass(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
         self.zero_value_input.hide()
+        self.first_zero_input.hide()
         self.filter_flag = '2nd low all pass'
         self.filter_label.setText('2nd Order All Pass Filter')
 
     def set_high_pass_notch(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.first_zero_input.hide()
         self.zero_value_input.show()
         self.filter_flag = 'high pass notch'
         self.filter_label.setText('2nd Order High Pass Notch Filter')
 
     def set_low_pass_notch(self):
+        self.first_pole_checkbox.setChecked(False)
+        self.hide_show_responses()
         self.char_value_input.show()
         self.first_pole_input.hide()
         self.zero_value_input.show()
+        self.first_zero_input.hide()
         self.filter_flag = 'low pass notch'
         self.filter_label.setText('2nd Order Low Pass Notch Filter')
 
+    # Other
+    def hide_show_responses(self):
+        if self.first_pole_checkbox.isChecked():
+            self.sine_input_box.hide()
+            self.step_input_box.hide()
+            self.square_input_box.hide()
+            self.delta_input_box.hide()
+        else:
+            self.sine_input_box.show()
+            self.step_input_box.show()
+            self.square_input_box.show()
+            self.delta_input_box.show()
+
+    # Plotter Function
     def plot(self, flag):
 
+        # General Parameters
         order_of_magnitude = 1
         w0 = 1
         pole = 0 + 1j * 0
         zero = 0 + 1j * 0
         gain = 1
 
+        # Transfer function Quotient Generator
         if self.filter_flag == '1st low pass':
             pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
             w0 = abs(pole)
@@ -207,13 +262,13 @@ class myWidget(QWidget, Ui_Form):
             w0 = abs(pole)
             P = [1, 0]
             Q = [1, w0]
-#        elif self.filter_flag == '1st high all pass':
-#            pole = (-1 * float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
-#            w0 = abs(pole)
-#            P = [1, w0]
-#            Q = [1, -1 * w0]
+        #        elif self.filter_flag == '1st high all pass':
+        #            pole = (-1 * float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+        #            w0 = abs(pole)
+        #            P = [1, w0]
+        #            Q = [1, -1 * w0]
         elif self.filter_flag == '1st low all pass':
-            pole = (float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+            pole = (float(self.first_pole_real.text()) + 1j * float(self.first_pole_im.text()))
             w0 = abs(pole)
             P = [1, -1 * w0]
             Q = [1, w0]
@@ -223,29 +278,35 @@ class myWidget(QWidget, Ui_Form):
             zero = (float(self.first_zero_real.text()) + 1j * float(self.first_zero_im.text()))
             wz = abs(zero)
             # if wz == 0 => full high pass
-            if wz == 0:
-                P = [1, 0]
+            if self.first_pole_checkbox.isChecked() and wz != 0:
+                P = [1/wz, 1]
+                Q = [1]
+                w0 = wz
+            elif self.first_zero_checkbox.isChecked() and wp != 0:
+                P = [wp]
                 Q = [1, wp]
-                self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
+                w0 = wp
+                self.filter_label.setText('1st Order Low Pass Filter')
             else:
-                P = [1 / wz, 1]
-                Q = [1 / wp, 1]
-
-            if wz > wp:
-                # if wz >> wp => full low pass
-                if (wz / wp) > 10e10:
-                    P = [wp]
+                if wz == 0:
+                    P = [1, 0]
                     Q = [1, wp]
-                self.filter_label.setText('1st Order Arbitrary Pole/Zero Low Pass Filter')
-            elif wp == wz:
-                # wp == wz => all pass
-                self.filter_flag = '1st low all pass'
-                self.filter_label.setText('1st Order All Pass Filter')
-                self.first_zero_input.hide()
-            else:
-                gain = gain * (wz / wp)
-                self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
-            w0 = wp
+                    self.filter_label.setText('1st Order High Pass Filter')
+                else:
+                    P = [1 / wz, 1]
+                    Q = [1 / wp, 1]
+
+                if wz > wp:
+                    self.filter_label.setText('1st Order Arbitrary Pole/Zero Low Pass Filter')
+                elif wp == wz:
+                    # wp == wz => all pass
+                    self.filter_flag = '1st low all pass'
+                    self.filter_label.setText('1st Order All Pass Filter')
+                    self.first_zero_input.hide()
+                else:
+                    gain = gain * (wz / wp)
+                    self.filter_label.setText('1st Order Arbitrary Pole/Zero High Pass Filter')
+                w0 = wp
         elif self.filter_flag == '2nd low pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -266,11 +327,11 @@ class myWidget(QWidget, Ui_Form):
             xi = (float(self.xi_input.text()))
             P = [1, 0, w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
-#        elif self.filter_flag == '2nd high all pass':
-#            w0 = (float(self.w0_input.text()))
-#            xi = (float(self.xi_input.text()))
-#            P = [1, 2 * xi * w0, w0 ** 2]
-#            Q = [1, -2 * xi * w0, w0 ** 2]
+        #        elif self.filter_flag == '2nd high all pass':
+        #            w0 = (float(self.w0_input.text()))
+        #            xi = (float(self.xi_input.text()))
+        #            P = [1, 2 * xi * w0, w0 ** 2]
+        #            Q = [1, -2 * xi * w0, w0 ** 2]
         elif self.filter_flag == '2nd low all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
@@ -281,14 +342,14 @@ class myWidget(QWidget, Ui_Form):
             xip = (float(self.xi_input.text()))
             wz = (float(self.wz_input.text()))
             xiz = (float(self.xiz_input.text()))
-            P = [1/(wz**2), -2 * xiz * wz, 1]
-            Q = [1/(wp**2), 2 * xip * wp, 1]
+            P = [1 / (wz ** 2), -2 * (xiz / wz), 1]
+            Q = [1 / (wp ** 2), 2 * (xip / wp), 1]
             w0 = wp
             if wz > wp:
                 self.filter_label.setText('2nd Order Low Pass Notch Filter')
                 self.filter_flag = 'low pass notch'
-            elif wz == wp:
-                self.filter_label.setText('2nd All Pass Notch Filter')
+            elif wz == wp and xip == xiz:
+                self.filter_label.setText('2nd All Pass Filter')
                 self.zero_value_input.hide()
                 self.filter_flag = '2nd low all pass'
             else:
@@ -298,36 +359,40 @@ class myWidget(QWidget, Ui_Form):
             xip = (float(self.xi_input.text()))
             wz = (float(self.wz_input.text()))
             xiz = (float(self.xiz_input.text()))
-            P = [1/(wz**2), -2 * xiz * wz, 1]
-            Q = [1/(wp**2), 2 * xip * wp, 1]
+            P = [1 / (wz ** 2), -2 * (xiz / wz), 1]
+            Q = [1 / (wp ** 2), 2 * (xip / wp), 1]
             w0 = wp
             if wz < wp:
                 self.filter_label.setText('2nd Order High Pass Notch Filter')
                 self.filter_flag = 'high pass notch'
                 gain = gain * (wz ** 2) / (wp ** 2)
-            elif wz == wp:
-                self.filter_label.setText('2nd All Pass Notch Filter')
+            elif wz == wp and xip == xiz:
+                self.filter_label.setText('2nd All Pass Filter')
                 self.zero_value_input.hide()
                 self.filter_flag = '2nd low all pass'
         elif self.filter_flag == 'none':
             self.filter_label.setText('No Filter Selected!')
             return
 
+        # Graphing Scope (area where the Bode will be defined)
         order_of_magnitude = floor(log10(w0))
         left_limit = order_of_magnitude - 5
         right_limit = order_of_magnitude + 5
 
+        # Applying gain
         gain = gain * float(self.gain_input.text())
         i = 0
         while i < len(P):
             P[i] = gain * P[i]
             i += 1
 
+        # Creating the Transfer Function
         H = signal.TransferFunction(P, Q)
 
         x = logspace(left_limit, right_limit, num=1000)
         Bode = signal.bode(H, x)
 
+        # Defining X axis
         if self.x_axis_mod.isChecked():
             freq = Bode[0]
         else:
@@ -335,6 +400,7 @@ class myWidget(QWidget, Ui_Form):
 
         self.axes.clear()
 
+        # Graphing the Selected Plot
         if flag == 'bode':
             self.x_axis_mod.show()
             self.pole_label.hide()
@@ -346,7 +412,7 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_xscale('log')
             self.axes.set_ylabel('|H(jw)| [dB]')
             if self.filter_flag == '1st low all pass' or self.filter_flag == '2nd low all pass':
-                self.axes.plot(freq, 20*log10(ones(len(freq)) * gain))
+                self.axes.plot(freq, 20 * log10(ones(len(freq)) * gain))
             else:
                 self.axes.plot(freq, Bode[1])
         elif flag == 'phase':
@@ -366,7 +432,7 @@ class myWidget(QWidget, Ui_Form):
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z)')
             self.axes.set_ylabel('Im(Z)')
-            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '1st arb filter':
+            if self.filter_flag == '1st low pass' or self.filter_flag == '1st high pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '1st arb filter' and self.first_pole_checkbox.isChecked() == False:
                 transfer_poles = pole
             else:
                 transfer_poles = H.poles

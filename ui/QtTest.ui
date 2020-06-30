@@ -260,13 +260,12 @@ All Pass Filter
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>12</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>
-Low-Pass Notch Filter
-</string>
+      <string>Low-Pass
+Notch Filter</string>
      </property>
     </widget>
     <widget class="QPushButton" name="high_pass_notch">
@@ -280,13 +279,12 @@ Low-Pass Notch Filter
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>12</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>
-High-Pass Notch Filter
-</string>
+      <string>High-Pass
+Notch Filter</string>
      </property>
     </widget>
    </widget>
@@ -396,6 +394,19 @@ High-Pass Notch Filter
     </property>
     <property name="text">
      <string>Im(pole):</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="first_pole_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>20</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>No Pole</string>
     </property>
    </widget>
   </widget>
@@ -615,7 +626,7 @@ High-Pass Notch Filter
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_2">
+  <widget class="QGroupBox" name="sine_input_box">
    <property name="geometry">
     <rect>
      <x>1210</x>
@@ -759,7 +770,7 @@ High-Pass Notch Filter
     </widget>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_3">
+  <widget class="QGroupBox" name="step_input_box">
    <property name="geometry">
     <rect>
      <x>1210</x>
@@ -849,7 +860,7 @@ High-Pass Notch Filter
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_5">
+  <widget class="QGroupBox" name="square_input_box">
    <property name="geometry">
     <rect>
      <x>1210</x>
@@ -993,7 +1004,7 @@ High-Pass Notch Filter
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_4">
+  <widget class="QGroupBox" name="delta_input_box">
    <property name="geometry">
     <rect>
      <x>1220</x>
@@ -1224,6 +1235,19 @@ High-Pass Notch Filter
     </property>
     <property name="text">
      <string>Im(zero):</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="first_zero_checkbox">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>20</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>No Zero</string>
     </property>
    </widget>
   </widget>
