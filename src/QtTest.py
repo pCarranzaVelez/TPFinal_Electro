@@ -190,11 +190,11 @@ class myWidget(QWidget, Ui_Form):
             w0 = abs(pole)
             P = [1, 0]
             Q = [1, w0]
-        elif self.filter_flag == '1st high all pass':
-            pole = (-1 * float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
-            w0 = abs(pole)
-            P = [1, w0]
-            Q = [1, -1 * w0]
+#        elif self.filter_flag == '1st high all pass':
+#            pole = (-1 * float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
+#            w0 = abs(pole)
+#            P = [1, w0]
+#            Q = [1, -1 * w0]
         elif self.filter_flag == '1st low all pass':
             pole = (float(self.first_pole_real.text()) + 1j* float(self.first_pole_im.text()))
             w0 = abs(pole)
@@ -220,11 +220,11 @@ class myWidget(QWidget, Ui_Form):
             xi = (float(self.xi_input.text()))
             P = [1, 0, w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
-        elif self.filter_flag == '2nd high all pass':
-            w0 = (float(self.w0_input.text()))
-            xi = (float(self.xi_input.text()))
-            P = [1, 2 * xi * w0, w0 ** 2]
-            Q = [1, -2 * xi * w0, w0 ** 2]
+#        elif self.filter_flag == '2nd high all pass':
+#            w0 = (float(self.w0_input.text()))
+#            xi = (float(self.xi_input.text()))
+#            P = [1, 2 * xi * w0, w0 ** 2]
+#            Q = [1, -2 * xi * w0, w0 ** 2]
         elif self.filter_flag == '2nd low all pass':
             w0 = (float(self.w0_input.text()))
             xi = (float(self.xi_input.text()))
