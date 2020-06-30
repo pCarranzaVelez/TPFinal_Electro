@@ -538,7 +538,7 @@ High-Pass Notch Filter
     </font>
    </property>
    <property name="title">
-    <string>Bode Graphs</string>
+    <string>Filter Graphs</string>
    </property>
    <widget class="QPushButton" name="bode_plot_button">
     <property name="geometry">

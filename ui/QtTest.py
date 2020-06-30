@@ -439,7 +439,7 @@ class Ui_Form(object):
         self.xi_input.setText(_translate("Form", "0.5"))
         self.w0_input.setText(_translate("Form", "1"))
         self.first_pole_im_label_2.setText(_translate("Form", " ξp:"))
-        self.groupBox.setTitle(_translate("Form", "Bode Graphs"))
+        self.groupBox.setTitle(_translate("Form", "Filter Graphs"))
         self.bode_plot_button.setText(_translate("Form", "Bode Plot"))
         self.phase_plot_button.setText(_translate("Form", "Phase Plot"))
         self.pole_plot_button.setText(_translate("Form", "Zero/Pole Plot"))
