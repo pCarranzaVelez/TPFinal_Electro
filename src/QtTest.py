@@ -22,7 +22,9 @@ class myWidget(QWidget, Ui_Form):
         self.filter_flag = 'none'
         self.first_pole_input.hide()
         self.char_value_input.hide()
+        self.zero_value_input.hide()
         self.pole_label.hide()
+        self.x_axis_mod.hide()
 
         # Input Validators
         self.first_pole_real.setValidator(QtGui.QDoubleValidator(-10e12, 0, 8, self))
@@ -30,6 +32,9 @@ class myWidget(QWidget, Ui_Form):
 
         self.w0_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.xi_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+
+        self.wz_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
+        self.xiz_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
 
         self.amplitude_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
         self.freq_input.setValidator(QtGui.QDoubleValidator(0, 10e12, 8, self))
@@ -66,6 +71,8 @@ class myWidget(QWidget, Ui_Form):
         self.notch.clicked.connect(self.set_notch)
         self.high_all_pass_2.clicked.connect(self.set_2nd_high_allpass)
         self.low_all_pass_2.clicked.connect(self.set_2nd_low_allpass)
+        self.high_pass_notch.clicked.connect(self.set_high_pass_notch)
+        self.low_pass_notch.clicked.connect(self.set_low_pass_notch)
 
         # Graph buttons
         self.bode_plot_button.clicked.connect(lambda: self.plot('bode'))
@@ -81,12 +88,14 @@ class myWidget(QWidget, Ui_Form):
     @pyqtSlot()
     def set_1st_lowpass(self):
         self.char_value_input.hide()
+        self.zero_value_input.hide()
         self.first_pole_input.show()
         self.filter_flag = '1st low pass'
         self.filter_label.setText('1st Order Low Pass Filter')
 
     def set_1st_highpass(self):
         self.char_value_input.hide()
+        self.zero_value_input.hide()
         self.first_pole_input.show()
         self.filter_flag = '1st high pass'
         self.filter_label.setText('1st Order High Pass Filter')
@@ -94,50 +103,72 @@ class myWidget(QWidget, Ui_Form):
     def set_1st_high_allpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
+        self.zero_value_input.hide()
         self.filter_flag = '1st high all pass'
         self.filter_label.setText('1st Order High All Pass Filter')
 
     def set_1st_low_allpass(self):
         self.char_value_input.hide()
         self.first_pole_input.show()
+        self.zero_value_input.hide()
         self.filter_flag = '1st low all pass'
         self.filter_label.setText('1st Order Low All Pass Filter')
 
     def set_2nd_lowpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = '2nd low pass'
         self.filter_label.setText('2nd Order Low Pass Filter')
 
     def set_2nd_highpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = '2nd high pass'
         self.filter_label.setText('2nd Order High Pass Filter')
 
     def set_bandpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = 'band pass'
         self.filter_label.setText('2nd Order Band Pass Filter')
 
     def set_notch(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = 'notch'
         self.filter_label.setText('2nd Order Notch Filter')
 
     def set_2nd_high_allpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = '2nd high all pass'
         self.filter_label.setText('2nd Order High All Pass Filter')
 
     def set_2nd_low_allpass(self):
         self.char_value_input.show()
         self.first_pole_input.hide()
+        self.zero_value_input.hide()
         self.filter_flag = '2nd low all pass'
         self.filter_label.setText('2nd Order Low All Pass Filter')
+
+    def set_high_pass_notch(self):
+        self.char_value_input.show()
+        self.first_pole_input.hide()
+        self.zero_value_input.show()
+        self.filter_flag = 'high pass notch'
+        self.filter_label.setText('2nd Order High Pass Notch Filter')
+
+    def set_low_pass_notch(self):
+        self.char_value_input.show()
+        self.first_pole_input.hide()
+        self.zero_value_input.show()
+        self.filter_flag = 'low pass notch'
+        self.filter_label.setText('2nd Order Low Pass Notch Filter')
 
     def plot(self, flag):
 
@@ -195,6 +226,26 @@ class myWidget(QWidget, Ui_Form):
             xi = (float(self.xi_input.text()))
             P = [1, -2 * xi * w0, w0 ** 2]
             Q = [1, 2 * xi * w0, w0 ** 2]
+        elif self.filter_flag == 'high pass notch':
+            wp = (float(self.w0_input.text()))
+            xip = (float(self.xi_input.text()))
+            wz = (float(self.wz_input.text()))
+            xiz = (float(self.xiz_input.text()))
+            P = [1/(wz**2), 2 * xiz * wz, 1]
+            Q = [1/(wp**2), 2 * xip * wp, 1]
+            w0 = wp
+            if wz > wp:
+                self.filter_label.setText('2nd Order Low Pass Notch Filter')
+        elif self.filter_flag == 'low pass notch':
+            wp = (float(self.w0_input.text()))
+            xip = (float(self.xi_input.text()))
+            wz = (float(self.wz_input.text()))
+            xiz = (float(self.xiz_input.text()))
+            P = [1/(wz**2), 2 * xiz * wz, 1]
+            Q = [1/(wp**2), 2 * xip * wp, 1]
+            w0 = wp
+            if wz < wp:
+                self.filter_label.setText('2nd Order High Pass Notch Filter')
         elif self.filter_flag == 'none':
             return
 
@@ -212,14 +263,22 @@ class myWidget(QWidget, Ui_Form):
 
         x = logspace(left_limit, right_limit, num=1000)
         Bode = signal.bode(H, x)
-        freq = Bode[0] / (2 * pi)
+
+        if self.x_axis_mod.isChecked():
+            freq = Bode[0]
+        else:
+            freq = Bode[0] / (2 * pi)
 
         self.axes.clear()
 
         if flag == 'bode':
+            self.x_axis_mod.show()
             self.pole_label.hide()
             self.axes.set_title('Bode plot')
-            self.axes.set_xlabel('f (log) [Hz]')
+            if self.x_axis_mod.isChecked():
+                self.axes.set_xlabel('w (log) [rad/s]')
+            else:
+                self.axes.set_xlabel('f (log) [Hz]')
             self.axes.set_xscale('log')
             self.axes.set_ylabel('|H(jw)| [dB]')
             if self.filter_flag == '1st high all pass' or self.filter_flag == '1st low all pass' or self.filter_flag == '2nd high all pass' or self.filter_flag == '2nd low all pass':
@@ -227,14 +286,18 @@ class myWidget(QWidget, Ui_Form):
             else:
                 self.axes.plot(freq, Bode[1])
         elif flag == 'phase':
+            self.x_axis_mod.show()
             self.pole_label.hide()
             self.axes.set_title('Bode Phase plot')
-            self.axes.set_xlabel('f (log) [Hz]')
+            if self.x_axis_mod.isChecked():
+                self.axes.set_xlabel('w (log) [rad/s]')
+            else:
+                self.axes.set_xlabel('f (log) [Hz]')
             self.axes.set_xscale('log')
             self.axes.set_ylabel('/_H(jw) [deg]')
             self.axes.plot(freq, Bode[2])
         elif flag == 'pole':
-            self.pole_label.setText('Triangle: Zeros\nCircle: Poles')
+            self.x_axis_mod.hide()
             self.pole_label.show()
             self.axes.set_title('Zero/Pole plot')
             self.axes.set_xlabel('Re(Z))')
@@ -250,6 +313,7 @@ class myWidget(QWidget, Ui_Form):
             self.axes.scatter(transfer_poles.real, transfer_poles.imag, marker='o', color='r')
             self.axes.scatter(transfer_zeros.real, transfer_zeros.imag, marker='^', color='b')
         elif flag == 'sine':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             A = float(self.amplitude_input.text())
             f = float(self.freq_input.text())
@@ -263,6 +327,7 @@ class myWidget(QWidget, Ui_Form):
 
             self.axes.plot(sine[0], sine[1])
         elif flag == 'cosine':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             A = float(self.amplitude_input.text())
             f = float(self.freq_input.text())
@@ -276,6 +341,7 @@ class myWidget(QWidget, Ui_Form):
 
             self.axes.plot(cosine[0], cosine[1])
         elif flag == 'ut':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             A = float(self.ut_amplitude_input.text())
             x2 = linspace(0, 10, num=1000)
@@ -288,6 +354,7 @@ class myWidget(QWidget, Ui_Form):
 
             self.axes.plot(step[0], step[1])
         elif flag == 'square':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             A = float(self.square_amplitude_input.text())
             dc = float(self.square_duty_input.text())
@@ -301,6 +368,7 @@ class myWidget(QWidget, Ui_Form):
 
             self.axes.plot(square[0], square[1])
         elif flag == 'sawtooth':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             A = float(self.square_amplitude_input.text())
             dc = float(self.square_duty_input.text())
@@ -314,6 +382,7 @@ class myWidget(QWidget, Ui_Form):
 
             self.axes.plot(sawtooth[0], sawtooth[1])
         elif flag == 'delta':
+            self.x_axis_mod.hide()
             self.pole_label.hide()
             x2 = linspace(0, 10, num=1000)
             delta = signal.impulse(H, T=x2)
